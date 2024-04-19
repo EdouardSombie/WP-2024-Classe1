@@ -13,6 +13,13 @@
         <div class="container">
             <?php
             // Afficher le menu primary-menu dans une balise nav.main-menu
+            if (has_nav_menu('primary_menu')) {
+                wp_nav_menu([
+                    'menu' => 'primary_menu',
+                    'container' => 'nav',
+                    'container_class' => 'main-menu'
+                ]);
+            }
             ?>
         </div>
     </header>
