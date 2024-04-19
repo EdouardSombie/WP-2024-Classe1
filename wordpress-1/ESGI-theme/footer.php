@@ -1,7 +1,9 @@
-<?php get_header() ?>
+        <footer id="site-footer">
+            <div class="container">
+                © <?= date('Y') ?> Edouard Sombié
+            </div>
+        </footer>
+        <?php wp_footer() ?>
+        </body>
 
-<main id="site-main">
-
-</main>
-
-<?php get_footer() ?>
+        </html>
