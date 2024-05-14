@@ -1,6 +1,6 @@
 .identity-card {
 	@include flexbox(column, nowrap, flex-start, center, #{rem(30)});
-	margin-top: rem(160);
+	margin-top: rem(80);
 	img {
 		display: block;
 		width: rem(102);

@@ -4479,6 +4479,7 @@ summary {
   --main-color: #3f51b5;
   --white: #fff;
   --black: #000;
+  --grey: #555;
   --bg-color: var(--white);
   --text-color: var(--black);
 }
@@ -4540,7 +4541,8 @@ svg:hover path {
 
 #site-footer {
   text-align: center;
-  margin-top: 12.5rem;
+  margin-top: 7.5rem;
+  padding: 2.5rem 0;
 }
 
 .identity-card {
@@ -4550,7 +4552,7 @@ svg:hover path {
   justify-content: flex-start;
   align-items: center;
   gap: 1.875rem;
-  margin-top: 10rem;
+  margin-top: 5rem;
 }
 .identity-card img {
   display: block;
@@ -4648,6 +4650,42 @@ svg:hover path {
   object-fit: cover;
   object-position: center;
   margin-bottom: 1.875rem;
+}
+
+.posts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding: 3.75rem 0;
+}
+.posts-list li {
+  margin-bottom: 1.25rem;
+}
+.posts-list li a {
+  color: inherit;
+  text-decoration: none;
+  font-family: "Overpass", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+.posts-list li a time {
+  font-family: "Source Serif 4", serif;
+  font-size: 0.8125rem;
+  line-height: 1.3125rem;
+  letter-spacing: 0.05em;
+  font-weight: 300;
+  color: var(--grey);
+}
+.posts-list li:hover a {
+  color: var(--main-color);
 }
 
 /*# sourceMappingURL=style.css.map */

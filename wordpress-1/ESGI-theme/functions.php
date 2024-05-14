@@ -80,7 +80,7 @@ function esgi_customize_register($wp_customize)
         'theme_supports' => '', // Rarely needed.
         'default' => '',
         'transport' => 'refresh', // or postMessage
-        'sanitize_callback' => '',
+        'sanitize_callback' => 'sanitize_hex_color',
         'sanitize_js_callback' => '', // Basically to_json.
     ]);
 
@@ -97,7 +97,7 @@ function esgi_customize_register($wp_customize)
         'theme_supports' => '', // Rarely needed.
         'default' => '',
         'transport' => 'refresh', // or postMessage
-        'sanitize_callback' => '',
+        'sanitize_callback' => 'esgi_sanitize_bool',
         'sanitize_js_callback' => '', // Basically to_json.
     ]);
 
@@ -117,7 +117,7 @@ function esgi_customize_register($wp_customize)
         'theme_supports' => '', // Rarely needed.
         'default' => '',
         'transport' => 'refresh', // or postMessage
-        'sanitize_callback' => '',
+        'sanitize_callback' => 'esgi_sanitize_bool',
         'sanitize_js_callback' => '', // Basically to_json.
     ]);
 
@@ -129,6 +129,11 @@ function esgi_customize_register($wp_customize)
         'label' => __('Afficher la sidebar'),
         'description' => __(''),
     ]);
+}
+
+function esgi_sanitize_bool($value)
+{
+    return is_bool($value) ? $value : false;
 }
 
 // Appliquer les styles custom
