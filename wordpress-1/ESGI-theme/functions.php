@@ -7,6 +7,7 @@ add_action('wp_enqueue_scripts', 'esgi_enqueue_assets');
 function esgi_enqueue_assets()
 {
     wp_enqueue_style('main', get_stylesheet_uri());
+    wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.js');
 }
 
 // Déclaration des emplacements de menu
@@ -156,4 +157,14 @@ function esgi_body_class($classes)
         $classes[] = 'dark';
     }
     return $classes;
+}
+
+
+// Calls AJAX
+
+add_action('wp_ajax_load_posts', 'ajax_load_posts');
+add_action('wp_ajax_nopriv_load_posts', 'ajax_load_posts');
+
+function ajax_load_posts()
+{
 }
