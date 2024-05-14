@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6 offset-3">
-                <h1><?= the_title() ?></h1>
+                <h1 class="post-title"><?= the_title() ?></h1>
                 <div class="post-content">
                     <?php the_content() ?>
                 </div>

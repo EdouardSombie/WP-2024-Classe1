@@ -13,7 +13,8 @@
 					@include resetLink;
 				}
 				&:hover,
-				&.current-menu-item {
+				&.current-menu-item,
+				&.current_page_parent {
 					a {
 						background-color: var(--main-color);
 						color: var(--white);

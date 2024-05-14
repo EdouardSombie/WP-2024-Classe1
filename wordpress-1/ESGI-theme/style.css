@@ -4478,10 +4478,31 @@ summary {
 :root {
   --main-color: #3f51b5;
   --white: #fff;
+  --black: #000;
+  --bg-color: var(--white);
+  --text-color: var(--black);
 }
 
 body {
   font-family: "Source Serif 4", serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+body.dark {
+  --bg-color: var(--black);
+  --text-color: var(--white);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+svg path {
+  fill: currentColor;
+}
+svg:hover path {
+  fill: var(--main-color);
 }
 
 #site-header {
@@ -4512,7 +4533,7 @@ body {
   color: inherit;
   text-decoration: none;
 }
-#site-header .main-menu ul li:hover a, #site-header .main-menu ul li.current-menu-item a {
+#site-header .main-menu ul li:hover a, #site-header .main-menu ul li.current-menu-item a, #site-header .main-menu ul li.current_page_parent a {
   background-color: var(--main-color);
   color: var(--white);
 }
@@ -4567,6 +4588,66 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1.5625rem;
+}
+.identity-card ul a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-title {
+  font-family: "Overpass", sans-serif;
+  font-size: 1.5625rem;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  text-align: center;
+  margin: 2em 0 1em;
+}
+
+.post-content {
+  font-family: "Source Serif 4", serif;
+  font-size: 1rem;
+  line-height: 1.6875rem;
+  letter-spacing: 0.03em;
+  font-weight: 400;
+}
+
+.post-meta {
+  font-family: "Source Serif 4", serif;
+  font-size: 0.8125rem;
+  line-height: 1.3125rem;
+  letter-spacing: 0.05em;
+  font-weight: 300;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3.125rem;
+  margin: 2.8125rem 0;
+}
+
+.post-author {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+}
+.post-author img {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+}
+
+.post-thumbnail img {
+  width: 100%;
+  aspect-ratio: 555/300;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 1.875rem;
 }
 
 /*# sourceMappingURL=style.css.map */

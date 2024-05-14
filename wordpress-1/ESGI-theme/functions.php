@@ -55,3 +55,100 @@ function esgi_get_icon($name)
     return isset($$name) ? $$name : ''; // nom de variable dynamique;
 
 }
+
+
+// Customisation du thème (WP customizer)
+
+add_action('customize_register', 'esgi_customize_register');
+function esgi_customize_register($wp_customize)
+{
+
+    // Ajout d'une nouvelle section
+    $wp_customize->add_section('esgi_section', [
+        'title' => __('Paramètres ESGI'),
+        'description' => __('Faites-vous plaisir :)'),
+        'panel' => '', // Not typically needed.
+        'priority' => 160,
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+    ]);
+
+    // Ajout d'un nouveau parametre (main-color)
+    $wp_customize->add_setting('main_color', [
+        'type' => 'theme_mod', // or 'option'
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+        'default' => '',
+        'transport' => 'refresh', // or postMessage
+        'sanitize_callback' => '',
+        'sanitize_js_callback' => '', // Basically to_json.
+    ]);
+
+    // Ajout d'un controle
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'main_color', [
+        'label' => __('Couleur principale', 'ESGI'),
+        'section' => 'esgi_section',
+    ]));
+
+    // Ajout d'un nouveau parametre (is_dark)
+    $wp_customize->add_setting('is_dark', [
+        'type' => 'theme_mod', // or 'option'
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+        'default' => '',
+        'transport' => 'refresh', // or postMessage
+        'sanitize_callback' => '',
+        'sanitize_js_callback' => '', // Basically to_json.
+    ]);
+
+    // Ajout d'un controle
+    $wp_customize->add_control('is_dark', [
+        'type' => 'checkbox',
+        'priority' => 0, // Within the section.
+        'section' => 'esgi_section', // Required, core or custom.
+        'label' => __('Dark mode'),
+        'description' => __('Black is beautiful.'),
+    ]);
+
+    // Ajout d'un nouveau parametre (has_sidebar)
+    $wp_customize->add_setting('has_sidebar', [
+        'type' => 'theme_mod', // or 'option'
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+        'default' => '',
+        'transport' => 'refresh', // or postMessage
+        'sanitize_callback' => '',
+        'sanitize_js_callback' => '', // Basically to_json.
+    ]);
+
+    // Ajout d'un controle
+    $wp_customize->add_control('has_sidebar', [
+        'type' => 'checkbox',
+        'priority' => 20, // Within the section.
+        'section' => 'esgi_section', // Required, core or custom.
+        'label' => __('Afficher la sidebar'),
+        'description' => __(''),
+    ]);
+}
+
+// Appliquer les styles custom
+add_action('wp_head', 'esgi_custom_styles');
+function esgi_custom_styles()
+{
+    echo '<style>
+            :root{
+                --main-color: ' . get_theme_mod('main_color') . ';
+            }
+            </style>';
+}
+
+
+// Appliquer le dark mode
+add_filter('body_class', 'esgi_body_class');
+function esgi_body_class($classes)
+{
+    if (get_theme_mod('is_dark')) {
+        $classes[] = 'dark';
+    }
+    return $classes;
+}

@@ -22,5 +22,8 @@
 	ul {
 		@include resetList;
 		@include flexbox(row, nowrap, center, center, #{rem(25)});
+		a {
+			@include resetLink;
+		}
 	}
 }

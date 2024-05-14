@@ -27,3 +27,11 @@ $font2: "Source Serif 4", serif;
 	letter-spacing: 0.03em;
 	font-weight: 400;
 }
+
+@mixin heading6 {
+	font-family: $font2;
+	font-size: rem(13);
+	line-height: rem(21);
+	letter-spacing: 0.05em;
+	font-weight: 300;
+}
