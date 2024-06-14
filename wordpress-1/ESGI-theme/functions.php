@@ -8,6 +8,11 @@ function esgi_enqueue_assets()
 {
     wp_enqueue_style('main', get_stylesheet_uri());
     wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.js');
+
+    $values = [
+        'ajaxURL' => admin_url('admin-ajax.php')
+    ];
+    wp_localize_script('main', 'esgiValues', $values);
 }
 
 // Déclaration des emplacements de menu
@@ -159,7 +164,6 @@ function esgi_body_class($classes)
     return $classes;
 }
 
-
 // Calls AJAX
 
 add_action('wp_ajax_load_posts', 'ajax_load_posts');
@@ -167,4 +171,17 @@ add_action('wp_ajax_nopriv_load_posts', 'ajax_load_posts');
 
 function ajax_load_posts()
 {
+    // Récupérer la page demandée (un des parametres du call)
+    $paged = $_GET['paged'];
+
+    // Ouvrir le buffer php
+    ob_start();
+
+    // Inclusion du template-part posts-list
+    include('template-parts/posts-list.php');
+
+    // Renvoie du buffer et suppression de celui-ci
+
+    echo ob_get_clean();
+    wp_die();
 }
