@@ -22,6 +22,9 @@ class ESGIPlugin
 
         // Déclaration d'un shortcode
         add_shortcode('skills-list', ['ESGIPlugin', 'showSkills']);
+
+        // Inclusion d'ACF
+        self::embedACF();
     }
 
     // Cette fonction appelée par un webhook doit être statique
@@ -53,7 +56,7 @@ class ESGIPlugin
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => 1,
-            'supports'           => array('title', 'editor', 'author', 'thumbnail'),
+            'supports'           => array('title', 'editor', 'author', 'thumbnail', 'custom-fields'),
             'show_in_rest'       => true,
             'menu_icon'          => 'dashicons-media-code',
         ];
@@ -126,6 +129,86 @@ class ESGIPlugin
             $html .= '</ul>';
         }
         return $html;
+    }
+
+    public static function embedACF()
+    {
+
+        if (!function_exists('is_plugin_active')) {
+            include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        // Check if ACF PRO is active
+        if (is_plugin_active('advanced-custom-fields-pro/acf.php')) {
+            // Abort all bundling, ACF PRO plugin takes priority
+            return;
+        }
+
+        // Check if another plugin or theme has bundled ACF
+        if (defined('MY_ACF_PATH')) {
+            return;
+        }
+
+        define('MY_ACF_PATH', __DIR__ . '/includes/acf/');
+        define('MY_ACF_URL', plugin_dir_url(__FILE__) . 'includes/acf/');
+
+        // Include the ACF plugin.
+        include_once(MY_ACF_PATH . 'acf.php');
+
+        // Customize the URL setting to fix incorrect asset URLs.
+        add_filter('acf/settings/url', 'my_acf_settings_url');
+        function my_acf_settings_url($url)
+        {
+            return MY_ACF_URL;
+        }
+
+        // Ajout d'un champ related_posts sur les publications de type project
+        if (function_exists('acf_add_local_field_group')) :
+
+            $post_object_field = array(
+
+                /* ... Insert generic settings here ... */
+                'key' => 'field_related_posts',
+                'label' => 'Articles en lien',
+                'name' => 'related_posts',
+                'type' => 'post_object',
+
+                /* (mixed) Specify an array of post types to filter the available choices. Defaults to '' */
+                'post_type' => 'post',
+
+                /* (mixed) Specify an array of taxonomies to filter the available choices. Defaults to '' */
+                'taxonomy' => '',
+
+                /* (bool) Allow a null (blank) value to be selected. Defaults to 0 */
+                'allow_null' => 0,
+
+                /* (bool) Allow mulitple choices to be selected. Defaults to 0 */
+                'multiple' => 1,
+
+                /* (string) Specify the type of value returned by get_field(). Defaults to 'object'.
+                Choices of 'object' (Post object) or 'id' (Post ID) */
+                'return_format' => 'object',
+
+            );
+
+            acf_add_local_field_group(array(
+                'key' => 'group_1',
+                'title' => 'Champs des projets',
+                'fields' => array(
+                    $post_object_field
+                ),
+                'location' => array(
+                    array(
+                        array(
+                            'param' => 'post_type',
+                            'operator' => '==',
+                            'value' => 'project',
+                        ),
+                    ),
+                ),
+            ));
+
+        endif;
     }
 }
 
