@@ -92,13 +92,16 @@ class ESGIPlugin
     public static function setTemplate($template)
     {
         if (is_single() && get_post_type() == 'project') {
+            // Si le bon template n'existe pas dans le theme graphique
             if (!file_exists(get_template_directory() . '/single-project.php')) {
                 $template = __DIR__ . '/templates/project.php';
             }
         }
 
         if (is_tax() && get_queried_object()->taxonomy == 'skill') {
-            $template = __DIR__ . '/templates/skill.php';
+            if (!file_exists(get_template_directory() . '/taxonomy-skill.php')) {
+                $template = __DIR__ . '/templates/skill.php';
+            }
         }
 
         return $template;
